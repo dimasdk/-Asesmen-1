@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Inventory Toko</string>
+    <string name="sembako">Sembako</string>
+    <string name="daftar">Daftar</string>
+    <string name="cari">Cari</string>
+    <string name="makanan">Makanan</string>
+    <string name="minuman">Minuman</string>
+    <string name="peralatan_mandi">Peralatan\nMandi</string>
+    <string name="peralatan_kebersihan">Peralatan\nKebersihan</string>
+    <string name="peralatan_dapur">Peralatan\nDapur</string>
+    <string name="list_kosong">Belum ada data</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="tambah_barang">Tambah Barang</string>
+    <string name="belum_bisa">Belum bisa tambah data</string>
+    <string name="x_diklik">%1$s diklik!</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="kembali">Kembali</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="copyright">Inventori Toko adalah sebuah aplikasi yang dirancang untuk memberikan
+                solusi efisien dalam manajemen stok barang di toko Anda. Dengan fitur-fitur canggih yang
+                disediakan, aplikasi ini memudahkan Anda untuk melacak persediaan barang, mengelola penjualan,
+                dan memantau kinerja usaha Anda dengan lebih baik.
+                \n\nCopyright © 2021 - 2024 Dimas Dwi.
+            \nAll rightsreserved.</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="bahasa_indonesia">Indonesia</string>
+    <string name="bahasa_inggris">Inggris</string>
+</resources>
