@@ -3,8 +3,8 @@ package org.d3if0041.mopro1.assessment_1.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "makanan")
-data class Makanan(
+@Entity(tableName = "clean")
+data class Clean(
     @PrimaryKey(autoGenerate = false)
     val nama: String,
     val stock: String,

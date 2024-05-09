@@ -6,9 +6,12 @@
     <string name="cari">Search</string>
     <string name="makanan">Food</string>
     <string name="minuman">Drink</string>
-    <string name="peralatan_mandi">Bathroom Equipment</string>
-    <string name="peralatan_kebersihan">Cleaning Equipment</string>
-    <string name="peralatan_dapur">Kitchen Equipment</string>
+    <string name="peralatan_mandi">Toiletries</string>
+    <string name="alat_mandi">Toiletries</string>
+    <string name="alat_kebersihan">Cleaning Equipment</string>
+    <string name="alat_dapur">Kitchen Equipment</string>
+    <string name="peralatan_kebersihan">Cleaning\nEquipment</string>
+    <string name="peralatan_dapur">Kitchen\nEquipment</string>
     <string name="list_kosong">No data yet</string>
     <string name="tambah_catatan">Add Note</string>
     <string name="tambah_barang">Add Item</string>
@@ -17,7 +20,7 @@
     <string name="bagikan">Share</string>
     <string name="kembali">Back</string>
     <string name="tentang_aplikasi">About the App</string>
-    <string name="copyright">Store Inventory is an application designed          to provide an efficient solution for managing stock inventory in your store.          With the advanced features it offers, this application makes it easy for you to track inventory,          manage sales, and monitor your business performance more effectively.         \\n\\nCopyright © 2021 - 2024 Dimas Dwi.</string>
+    <string name="copyright">Store Inventory is an application designed to provide an efficient solution for managing stock inventory in your store.          With the advanced features it offers, this application makes it easy for you to track inventory,          manage sales, and monitor your business performance more effectively.         \\n\\nCopyright © 2021 - 2024 Dimas Dwi.</string>
     <string name="pengaturan">Settings</string>
     <string name="bahasa_indonesia">Indonesian</string>
     <string name="bahasa_inggris">English</string>
