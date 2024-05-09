@@ -28,7 +28,6 @@ import org.d3if0041.mopro1.assessment_1.ui.screen.Drink.MinumanScreen
 import org.d3if0041.mopro1.assessment_1.ui.screen.Food.CleaningScreen
 import org.d3if0041.mopro1.assessment_1.ui.screen.Sembako.SbakoScreen
 import org.d3if0041.mopro1.assessment_1.ui.screen.Sembako.SembakoScreen
-import org.d3if0041.mopro1.assessment_1.ui.screen.TvScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController = rememberNavController()) {
