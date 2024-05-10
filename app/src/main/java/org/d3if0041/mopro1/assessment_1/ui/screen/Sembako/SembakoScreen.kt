@@ -30,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,17 +41,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.d3if0041.mopro1.assessment_1.R
 import org.d3if0041.mopro1.assessment_1.database.CatatanDb
-import org.d3if0041.mopro1.assessment_1.database.MakananDb
 import org.d3if0041.mopro1.assessment_1.halaman.Screen
 import org.d3if0041.mopro1.assessment_1.model.Catatan
-import org.d3if0041.mopro1.assessment_1.model.Makanan
-import org.d3if0041.mopro1.assessment_1.model.Mandi
-import org.d3if0041.mopro1.assessment_1.ui.screen.Drink.InfoMinuman1
-import org.d3if0041.mopro1.assessment_1.ui.screen.Food.GridItemMakanan
-import org.d3if0041.mopro1.assessment_1.ui.screen.Food.MakananViewModel
-import org.d3if0041.mopro1.assessment_1.ui.screen.Mandi.InfoItem
 import org.d3if0041.mopro1.assessment_1.ui.theme.Assessment_1Theme
-import org.d3if0041.mopro1.assessment_1.util.MakananModelFactory
 import org.d3if0041.mopro1.assessment_1.util.SembakoModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -167,7 +158,7 @@ fun BottomSheetContents(catatan: Catatan, onClose: () -> Unit) {
         ItemSembako(label = "Berat", value = "${catatan.berat}")
         Spacer(modifier = Modifier.height(20.dp))
 
-        InfoItem(label = "Panjang", value = "${catatan.panjang}")
+        ItemSembako(label = "Panjang", value = "${catatan.panjang}")
         Spacer(modifier = Modifier.height(20.dp))
 
         ItemSembako(label = "Lebar", value = "${catatan.lebar}")
@@ -228,16 +219,16 @@ fun ItemSembako1(label: String, value: String) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.End,// Memberi padding atas dan bawah untuk tiap item
-        verticalAlignment = Alignment.CenterVertically // Mengatur elemen secara horizontal
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "$label: $value",
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold,
+            text = if (label == "Nama") value else "$label: $value",
+            style = if (label == "Nama") MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold) else MaterialTheme.typography.bodyLarge,
         )
     }
 }
+
 @Composable
 fun ScreenContent(
     showList:Boolean,
@@ -300,18 +291,16 @@ fun ListItemSembako(catatan: Catatan, onClick: (Catatan) -> Unit, onViewDetails:
                     painter = rememberImagePainter(uri),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(100.dp)  // Sesuaikan ukuran gambar sesuai kebutuhan
-                        .padding(end = 8.dp) // Tambahkan padding di sisi kanan gambar
+                        .size(100.dp)
+                        .padding(end = 8.dp)
                 )
             }
-            // Kolom untuk menampilkan info di samping gambar
             Column {
                 ItemSembako1(label = "Nama", value = catatan.nama)
                 ItemSembako1(label = "Stok", value = catatan.stock)
                 ItemSembako1(label = "Harga", value = catatan.harga)
             }
         }
-        // Button berada di luar Row agar tidak mempengaruhi tata letak sejajar gambar dan info
         Button(
             onClick = { onViewDetails(catatan) },
             modifier = Modifier
@@ -369,14 +358,17 @@ fun SembakoSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
 }
 
 @Composable
-fun GridItemSembako(catatan: Catatan, onClick: () -> Unit, onViewDetails: (Catatan) -> Unit) {
+fun GridItemSembako(
+    catatan: Catatan,
+    onClick: () -> Unit,
+    onViewDetails: (Catatan) -> Unit
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val spaceBetweenItems = 8.dp
     val padding = 16.dp
 
-    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems) / 2
-
+    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems * 2) / 3 // Adjusted card width
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -390,7 +382,7 @@ fun GridItemSembako(catatan: Catatan, onClick: () -> Unit, onViewDetails: (Catat
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally  // Tengah teks
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             catatan.gambarResId?.let { uri ->
                 Image(
@@ -398,38 +390,63 @@ fun GridItemSembako(catatan: Catatan, onClick: () -> Unit, onViewDetails: (Catat
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)  // Sesuaikan tinggi sesuai kebutuhan
+                        .height(100.dp)
                 )
             }
             Text(
                 text = catatan.nama,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),  // Teks tebal
-                textAlign = TextAlign.Center  // Tengah teks
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                textAlign = TextAlign.Center,
             )
 
-            // Row to place items on the right
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Stok:",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "${catatan.stock}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
                 }
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "${catatan.stock}",
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Harga:",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "${catatan.harga}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
                     )
                 }
             }

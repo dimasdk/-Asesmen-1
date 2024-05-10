@@ -73,7 +73,6 @@ import kotlinx.coroutines.launch
 import org.d3if0041.mopro1.assessment_1.R
 import org.d3if0041.mopro1.assessment_1.database.MinumanDb
 import org.d3if0041.mopro1.assessment_1.halaman.Screen
-import org.d3if0041.mopro1.assessment_1.model.Mandi
 import org.d3if0041.mopro1.assessment_1.model.Minuman
 import org.d3if0041.mopro1.assessment_1.ui.theme.Assessment_1Theme
 import org.d3if0041.mopro1.assessment_1.util.MinumanModelFactory
@@ -247,7 +246,7 @@ fun InfoItemMinuman(label: String, value: String, isDescription: Boolean = false
 }
 
 @Composable
-fun InfoMinuman1(label: String, value: String) {
+fun ItemMinuman1(label: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -256,12 +255,12 @@ fun InfoMinuman1(label: String, value: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "$label: $value",
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold,
+            text = if (label == "Nama") value else "$label: $value",
+            style = if (label == "Nama") MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold) else MaterialTheme.typography.bodyLarge,
         )
     }
 }
+
 @Composable
 fun ScreenContent(
     showList:Boolean,
@@ -330,9 +329,9 @@ fun ListItemMinuman(minuman: Minuman, onClick: (Minuman) -> Unit, onViewDetails:
             }
             // Kolom untuk menampilkan info di samping gambar
             Column {
-                InfoMinuman1(label = "Nama", value = minuman.nama)
-                InfoMinuman1(label = "Stok", value = minuman.stock)
-                InfoMinuman1(label = "Harga", value = minuman.harga)
+                ItemMinuman1(label = "Nama", value = minuman.nama)
+                ItemMinuman1(label = "Stok", value = minuman.stock)
+                ItemMinuman1(label = "Harga", value = minuman.harga)
             }
         }
         Button(
@@ -349,14 +348,17 @@ fun ListItemMinuman(minuman: Minuman, onClick: (Minuman) -> Unit, onViewDetails:
 }
 
 @Composable
-fun GridItemMinuman(minuman: Minuman, onClick: () -> Unit, onViewDetails: (Minuman) -> Unit) {
+fun GridItemMinuman(
+    minuman: Minuman,
+    onClick: () -> Unit,
+    onViewDetails: (Minuman) -> Unit
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val spaceBetweenItems = 8.dp  // Spacing yang Anda inginkan
-    val padding = 16.dp  // Padding di kiri dan kanan
+    val spaceBetweenItems = 8.dp
+    val padding = 16.dp
 
-    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems) / 2
-
+    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems * 2) / 3 // Adjusted card width
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -370,7 +372,7 @@ fun GridItemMinuman(minuman: Minuman, onClick: () -> Unit, onViewDetails: (Minum
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally  // Tengah teks
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             minuman.gambarResId?.let { uri ->
                 Image(
@@ -378,38 +380,63 @@ fun GridItemMinuman(minuman: Minuman, onClick: () -> Unit, onViewDetails: (Minum
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)  // Sesuaikan tinggi sesuai kebutuhan
+                        .height(100.dp)
                 )
             }
             Text(
                 text = minuman.nama,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),  // Teks tebal
-                textAlign = TextAlign.Center  // Tengah teks
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                textAlign = TextAlign.Center,
             )
 
-            // Row to place items on the right
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Stok:",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "${minuman.stock}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
                 }
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "${minuman.stock}",
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Harga:",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "${minuman.harga}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
                     )
                 }
             }

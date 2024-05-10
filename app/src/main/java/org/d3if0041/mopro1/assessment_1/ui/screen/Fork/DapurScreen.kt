@@ -255,8 +255,8 @@ fun ItemDapur1(label: String, value: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "$label: $value",
-            style = MaterialTheme.typography.bodyLarge,
+            text = if (label == "Nama") value else "$label: $value",
+            style = if (label == "Nama") MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold) else MaterialTheme.typography.bodyLarge,
         )
     }
 }
@@ -327,23 +327,10 @@ fun ListItemDapur(dapur: Dapur, onClick: (Dapur) -> Unit, onViewDetails: (Dapur)
                         .padding(end = 8.dp)
                 )
             }
-            Row(
-                modifier = Modifier.padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    Text(
-                        text = dapur.nama,
-                        maxLines = 1,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    ItemDapur1(label = "Stok", value = dapur.stock)
-                    ItemDapur1(label = "Harga", value = dapur.harga)
-                }
+            Column {
+                ItemDapur1(label = "Nama", value = dapur.nama)
+                ItemDapur1(label = "Stok", value = dapur.stock)
+                ItemDapur1(label = "Harga", value = dapur.harga)
             }
         }
         Button(
@@ -403,14 +390,17 @@ fun DapurSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
 }
 
 @Composable
-fun GridItemDapur(dapur: Dapur, onClick: () -> Unit, onViewDetails: (Dapur) -> Unit) {
+fun GridItemDapur(
+    dapur: Dapur,
+    onClick: () -> Unit,
+    onViewDetails: (Dapur) -> Unit
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val spaceBetweenItems = 8.dp
     val padding = 16.dp
 
-    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems) / 2
-
+    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems * 2) / 3 // Adjusted card width
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -424,7 +414,7 @@ fun GridItemDapur(dapur: Dapur, onClick: () -> Unit, onViewDetails: (Dapur) -> U
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally  // Tengah teks
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             dapur.gambarResId?.let { uri ->
                 Image(
@@ -432,38 +422,63 @@ fun GridItemDapur(dapur: Dapur, onClick: () -> Unit, onViewDetails: (Dapur) -> U
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)  // Sesuaikan tinggi sesuai kebutuhan
+                        .height(100.dp)
                 )
             }
             Text(
                 text = dapur.nama,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),  // Teks tebal
-                textAlign = TextAlign.Center  // Tengah teks
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                textAlign = TextAlign.Center,
             )
 
-            // Row to place items on the right
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Stok:",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "${dapur.stock}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
                 }
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "${dapur.stock}",
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Harga:",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "${dapur.harga}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
                     )
                 }
             }
@@ -485,7 +500,6 @@ fun GridItemDapur(dapur: Dapur, onClick: () -> Unit, onViewDetails: (Dapur) -> U
         }
     }
 }
-
 @Composable
 fun DapurListMessage(modifier: Modifier) {
     Column(

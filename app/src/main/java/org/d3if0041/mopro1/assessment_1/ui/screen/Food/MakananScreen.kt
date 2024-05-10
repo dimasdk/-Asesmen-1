@@ -60,7 +60,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -75,7 +74,6 @@ import org.d3if0041.mopro1.assessment_1.R
 import org.d3if0041.mopro1.assessment_1.database.MakananDb
 import org.d3if0041.mopro1.assessment_1.halaman.Screen
 import org.d3if0041.mopro1.assessment_1.model.Makanan
-import org.d3if0041.mopro1.assessment_1.model.Mandi
 import org.d3if0041.mopro1.assessment_1.ui.screen.MainScreen
 import org.d3if0041.mopro1.assessment_1.ui.theme.Assessment_1Theme
 import org.d3if0041.mopro1.assessment_1.util.MakananModelFactory
@@ -248,23 +246,6 @@ fun ItemMakanan(label: String, value: String, isDescription: Boolean = false) {
 }
 
 @Composable
-fun ItemMakanan1(label: String, value: String) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = "$label: $value",
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Bold,
-        )
-    }
-}
-
-@Composable
 fun ScreenContent(
     showList:Boolean,
     modifier: Modifier,
@@ -352,6 +333,23 @@ fun ListItemMakanan(makanan: Makanan, onClick: (Makanan) -> Unit, onViewDetails:
 }
 
 @Composable
+fun ItemMakanan1(label: String, value: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = if (label == "Nama") value else "$label: $value",
+            style = if (label == "Nama") MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold) else MaterialTheme.typography.bodyLarge,
+        )
+    }
+}
+
+
+@Composable
 fun MakananSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
     Box(
         modifier = Modifier
@@ -395,14 +393,17 @@ fun MakananSearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
 }
 
 @Composable
-fun GridItemMakanan(makanan: Makanan, onClick: () -> Unit, onViewDetails: (Makanan) -> Unit) {
+fun GridItemMakanan(
+    makanan: Makanan,
+    onClick: () -> Unit,
+    onViewDetails: (Makanan) -> Unit
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val spaceBetweenItems = 8.dp  // Spacing yang Anda inginkan
-    val padding = 16.dp  // Padding di kiri dan kanan
+    val spaceBetweenItems = 8.dp
+    val padding = 16.dp
 
-    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems) / 2
-
+    val cardWidth = ((screenWidth - padding * 2) - spaceBetweenItems * 2) / 3 // Adjusted card width
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -416,7 +417,7 @@ fun GridItemMakanan(makanan: Makanan, onClick: () -> Unit, onViewDetails: (Makan
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally  // Tengah teks
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             makanan.gambarResId?.let { uri ->
                 Image(
@@ -424,38 +425,63 @@ fun GridItemMakanan(makanan: Makanan, onClick: () -> Unit, onViewDetails: (Makan
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)  // Sesuaikan tinggi sesuai kebutuhan
+                        .height(100.dp)
                 )
             }
             Text(
                 text = makanan.nama,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),  // Teks tebal
-                textAlign = TextAlign.Center  // Tengah teks
+                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                textAlign = TextAlign.Center,
             )
 
-            // Row to place items on the right
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Stok:",
-                        style = MaterialTheme.typography.bodySmall
-                    )
-                    Text(
-                        text = "${makanan.stock}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
                 }
-                Column {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "${makanan.stock}",
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "Harga:",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.End
                     )
+                }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Text(
                         text = "${makanan.harga}",
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.bodySmall,
+                        textAlign = TextAlign.Start
                     )
                 }
             }
