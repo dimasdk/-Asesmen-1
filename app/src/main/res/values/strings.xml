@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">Inventory Toko</string>
+    <string name="gambar">Gambar %1$s</string>
+    <string name="error">Gagal memuat data.. Koneksi error.</string>
+    <string name="try_again">Coba lagi</string>
+    <string name="profil">Profil</string>
+    <string name="tutup">Tutup</string>
+    <string name="logout">Logout</string>
+    <string name="sembako">Sembako</string>
+    <string name="daftar">Daftar</string>
+    <string name="cari">Cari...</string>
+    <string name="makanan">Makanan</string>
+    <string name="minuman">Minuman</string>
+    <string name="peralatan_mandi">Perlengkapan\nMandi</string>
+    <string name="alat_mandi">Perlengkapan Mandi</string>
+    <string name="alat_kebersihan">Peralatan Kebersihan</string>
+    <string name="alat_dapur">Peralatan Dapur</string>
+    <string name="peralatan_kebersihan">Peralatan\nKebersihan</string>
+    <string name="peralatan_dapur">Peralatan\nDapur</string>
+    <string name="list_kosong">Belum ada data</string>
+    <string name="tambah_catatan">Tambah Catatan</string>
+    <string name="tambah_barang">Tambah Barang</string>
+    <string name="belum_bisa">Belum bisa tambah data</string>
+    <string name="x_diklik">%1$s diklik!</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="akun">Akun</string>
+    <string name="kembali">Kembali</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="copyright">Inventori Toko adalah sebuah aplikasi yang dirancang untuk memberikan
+                solusi efisien dalam manajemen stok barang di toko Anda. Dengan fitur-fitur canggih yang
+                disediakan, aplikasi ini memudahkan Anda untuk melacak persediaan barang, mengelola penjualan,
+                dan memantau kinerja usaha Anda dengan lebih baik.
+                \n\nCopyright © 2021 - 2024 Dimas Dwi.
+                 \nAll rightsreserved.</string>
+    <string name="pengaturan">Pengaturan</string>
+    <string name="bahasa_indonesia">Indonesia</string>
+    <string name="bahasa_inggris">English</string>
+    <string name="lihat_detail">Lihat Detail</string>
+    <string name="kategori">Kategori</string>
+    <string name="lihat_semua">Lihat Semua</string>
+    <string name="menu">Menu</string>
+    <!--    <string name="edit">Edit</string>-->
+    <!--    <string name="hapus">Hapus</string>-->
+    <string name="nama">Nama</string>
+    <string name="stok">Stok</string>
+    <string name="ubah_barang">Ubah Barang</string>
+    <string name="invalid_nama">Nama tidak boleh kosong.</string>
+    <string name="invalid_nim">Nim tidak boleh kosong.</string>
+    <string name="invalid_kelas">Kelas tidak boleh kosong.</string>
+    <string name="invalid_kelas1">HARGA tidak boleh kosong.</string>
+    <string name="invalid_kelas2">panjang tidak boleh kosong.</string>
+    <string name="invalid_kelas3">lebar tidak boleh kosong.</string>
+    <string name="invalid_kelas4">tinggi tidak boleh kosong.</string>
+    <string name="invalid_kelas5">deskripsi tidak boleh kosong.</string>
+    <string name="invalid_kelas6">deskripsi tidak boleh kosong.</string>
+    <string name="harga">Harga</string>
+    <string name="berat">Berat</string>
+    <string name="panjang">Panjang</string>
+    <string name="lebar">Lebar</string>
+    <string name="tinggi">Tinggi</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="simpan">Simpan</string>
+    <string name="tombol_hapus">Hapus</string>
+    <string name="tombol_batal">Batal</string>
+    <string name="list">Tampilan list</string>
+    <string name="grid">Tampilan grid</string>
+    <string name="lainya">Opsi lainya</string>
+    <string name="batal">batal</string>
+    <string name="tambah_hewan">tambah</string>
+    <string name="delete">hapus</string>
+    <string name="confirm_delete">Apakah Anda Ingin menghapus Gambar ini?</string>
+    <string name="cancel">Batal</string>
+</resources>
